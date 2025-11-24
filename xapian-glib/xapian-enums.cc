@@ -48,7 +48,7 @@ type_name ## _get_type (void) \
     { \
       static const GFlagsValue v[] = { \
         values \
-	{ 0, NULL, NULL }, \
+        { 0, NULL, NULL }, \
       }; \
       g_once_init_leave (&g_define_id, \
                          g_flags_register_static (g_intern_static_string (#TypeName), v)); \

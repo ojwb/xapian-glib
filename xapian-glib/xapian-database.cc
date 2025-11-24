@@ -215,7 +215,7 @@ xapian_database_set_internal (XapianDatabase   *self,
  */
 void
 xapian_database_set_is_writable (XapianDatabase *self,
-				 gboolean        is_writable)
+                                 gboolean        is_writable)
 {
   XapianDatabasePrivate *priv = XAPIAN_DATABASE_GET_PRIVATE (self);
 

@@ -77,7 +77,7 @@ xapian_writable_database_init_internal (GInitable    *initable,
 {
   XapianDatabase *database = XAPIAN_DATABASE (initable);
   XapianWritableDatabasePrivate *priv;
-  
+
   priv = XAPIAN_WRITABLE_DATABASE_GET_PRIVATE (initable);
 
   const char *path = xapian_database_get_path (database);
@@ -645,7 +645,7 @@ xapian_writable_database_add_spelling_full (XapianWritableDatabase *self,
  * @word: The word to remove
  *
  * Remove a word from the spelling dictionary.
- * 
+ *
  * The word's frequency is decreased by 1, and if would become zero or less then
  * the word is removed completely.
  *
@@ -666,7 +666,7 @@ xapian_writable_database_remove_spelling (XapianWritableDatabase *self,
  * @self: a #XapianWritableDatabase
  * @word: The word to remove
  * @freqdec: How much to decrease its frequency by
- * 
+ *
  * Remove a word from the spelling dictionary.
  *
  * The word's frequency is decreased, and if would become zero or less then the
@@ -690,7 +690,7 @@ xapian_writable_database_remove_spelling_full (XapianWritableDatabase *self,
  * @self: a #XapianWritableDatabase
  * @key: A key in the database's metadata
  * @value: The value to set for @key
- * 
+ *
  * Set the user-specified metadata associated with a given key.
  *
  * This method sets the metadata value associated with a given key. If there is

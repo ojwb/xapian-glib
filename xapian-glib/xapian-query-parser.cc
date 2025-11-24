@@ -644,7 +644,7 @@ xapian_query_parser_get_corrected_query_string (XapianQueryParser *parser)
   g_return_val_if_fail (XAPIAN_IS_QUERY_PARSER (parser), NULL);
 
   XapianQueryParserPrivate *priv = XAPIAN_QUERY_PARSER_GET_PRIVATE (parser);
-  
+
   std::string corrected = priv->mQueryParser->get_corrected_query_string ();
   return g_strdup (corrected.c_str ());
 }

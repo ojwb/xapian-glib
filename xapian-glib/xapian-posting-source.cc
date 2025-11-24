@@ -93,7 +93,7 @@ class GenericPostingSource : public Xapian::PostingSource {
  * Since: 2.0
  */
 Xapian::PostingSource*
-xapian_posting_source_get_internal (XapianPostingSource *self) 
+xapian_posting_source_get_internal (XapianPostingSource *self)
 {
   XapianPostingSourcePrivate *priv = XAPIAN_POSTING_SOURCE_GET_PRIVATE (self);
 

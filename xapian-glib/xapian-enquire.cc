@@ -392,8 +392,8 @@ xapian_enquire_set_sort_by_value (XapianEnquire *enquire,
  */
 void
 xapian_enquire_set_query (XapianEnquire *enquire,
-			  XapianQuery   *query,
-			  unsigned int   qlen)
+                          XapianQuery   *query,
+                          unsigned int   qlen)
 {
   g_return_if_fail (XAPIAN_IS_ENQUIRE (enquire));
   g_return_if_fail (XAPIAN_IS_QUERY (query));
