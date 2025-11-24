@@ -30,7 +30,7 @@ $ cd xapian-glib
 Then run:
 
 ```sh
-$ meson _build .
+$ meson setup _build .
 $ ninja -C _build
 $ meson test -C _build		# Run the test suite
 ```
