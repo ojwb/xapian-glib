@@ -1,5 +1,5 @@
 /* Copyright 2014  Endless Mobile
- * Copyright 2017  Olly Betts
+ * Copyright 2017, 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -83,34 +83,38 @@ xapian_database_backend_to_internal (XapianDatabaseBackend backend)
 {
   if (backend == XAPIAN_DATABASE_BACKEND_STUB)
     return Xapian::DB_BACKEND_STUB;
-  if (backend == XAPIAN_DATABASE_BACKEND_GLASS)
+  if (backend == XAPIAN_DATABASE_BACKEND_GLASS) {
 #ifdef XAPIAN_HAS_GLASS_BACKEND
     return Xapian::DB_BACKEND_GLASS;
 #else
     g_warning ("Glass backend not supported by Xapian");
     return 0;
 #endif
-  if (backend == XAPIAN_DATABASE_BACKEND_CHERT)
+  }
+  if (backend == XAPIAN_DATABASE_BACKEND_CHERT) {
 #ifdef XAPIAN_HAS_CHERT_BACKEND
     return Xapian::DB_BACKEND_CHERT;
 #else
     g_warning ("Chert backend not supported by Xapian");
     return 0;
 #endif
-  if (backend == XAPIAN_DATABASE_BACKEND_INMEMORY)
+  }
+  if (backend == XAPIAN_DATABASE_BACKEND_INMEMORY) {
 #ifdef XAPIAN_HAS_INMEMORY_BACKEND
     return Xapian::DB_BACKEND_INMEMORY;
 #else
     g_warning ("In-memory backend not supported by Xapian");
     return 0;
 #endif
-  if (backend == XAPIAN_DATABASE_BACKEND_HONEY)
+  }
+  if (backend == XAPIAN_DATABASE_BACKEND_HONEY) {
 #ifdef XAPIAN_HAS_HONEY_BACKEND
     return Xapian::DB_BACKEND_HONEY;
 #else
     g_warning ("Honey backend not supported by Xapian");
     return 0;
 #endif
+  }
 
   return 0;
 }
