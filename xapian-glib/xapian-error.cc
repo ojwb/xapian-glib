@@ -50,6 +50,7 @@ init_error_types (void)
   XAPIAN_SET_ERROR_TYPE (QUERY_PARSER, QueryParserError);
   XAPIAN_SET_ERROR_TYPE (SERIALISATION, SerialisationError);
   XAPIAN_SET_ERROR_TYPE (RANGE, RangeError);
+  XAPIAN_SET_ERROR_TYPE (DATABASE_NOT_FOUND, DatabaseNotFoundError);
 
 #undef XAPIAN_SET_ERROR_TYPE
 

@@ -1,5 +1,5 @@
 /* Copyright 2014  Endless Mobile
- * Copyright 2017  Olly Betts
+ * Copyright 2017, 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -68,6 +68,7 @@ GType xapian_database_action_get_type (void);
  * @XAPIAN_ERROR_DATABASE_CREATE: Failed to create a database
  * @XAPIAN_ERROR_DATABASE_LOCK: Failed to acquire the lock on a database
  * @XAPIAN_ERROR_DATABASE_MODIFIED: Database modified after opening
+ * @XAPIAN_ERROR_DATABASE_NOT_FOUND: Database not found during opening
  * @XAPIAN_ERROR_DATABASE_OPENING: Unable to open the database
  * @XAPIAN_ERROR_DATABASE_VERSION: Version mismatch when opening the database
  * @XAPIAN_ERROR_DOC_NOT_FOUND: Document not found
@@ -103,10 +104,16 @@ typedef enum {
   XAPIAN_ERROR_QUERY_PARSER,
   XAPIAN_ERROR_SERIALISATION,
   XAPIAN_ERROR_RANGE,
+  XAPIAN_ERROR_DATABASE_NOT_FOUND,
 
   /*< private >*/
   XAPIAN_ERROR_LAST
 } XapianError;
+
+/* Allow #ifdef checks for more recently added enum values. */
+#ifndef __GTK_DOC_IGNORE__
+#define XAPIAN_ERROR_DATABASE_NOT_FOUND XAPIAN_ERROR_DATABASE_NOT_FOUND
+#endif
 
 XAPIAN_GLIB_AVAILABLE_IN_2_0
 GType xapian_error_get_type (void);
@@ -329,7 +336,7 @@ GType xapian_database_flags_get_type (void);
  * @XAPIAN_DATABASE_BACKEND_CHERT: Use the Chert backend
  * @XAPIAN_DATABASE_BACKEND_STUB: Open a stub database
  * @XAPIAN_DATABASE_BACKEND_INMEMORY: Use the "in memory" backend
- * @XAPIAN_DATABASE_BACKEND_HONEY: Use the Honey backend 
+ * @XAPIAN_DATABASE_BACKEND_HONEY: Use the Honey backend
  *
  * The Xapian database backend to use when opening a database.
  *

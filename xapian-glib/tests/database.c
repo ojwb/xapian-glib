@@ -55,7 +55,7 @@ database_new_nonexistent (void)
   XapianDatabase *db = xapian_database_new_with_path ("doesnotexist", &error);
 
   g_assert_null (db);
-  g_assert_error (error, XAPIAN_ERROR, XAPIAN_ERROR_DATABASE_OPENING);
+  g_assert_error (error, XAPIAN_ERROR, XAPIAN_ERROR_DATABASE_NOT_FOUND);
 
   g_error_free (error);
 }
