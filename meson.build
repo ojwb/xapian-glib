@@ -61,7 +61,6 @@ if cpp.get_id() == 'gcc' or cpp.get_id() == 'clang'
     '-Wno-shadow',
     '-Werror=format=2',
     '-Werror=redundant-decls',
-    '-Werror=implicit',
     '-Werror=nonnull',
     '-Werror=init-self',
     '-Werror=main',
@@ -73,7 +72,6 @@ if cpp.get_id() == 'gcc' or cpp.get_id() == 'clang'
     '-Werror=write-strings',
     '-Werror=address',
     '-Werror=int-to-pointer-cast',
-    '-Werror=pointer-to-int-cast',
     '-Werror=empty-body',
     '-Werror=undef',
   ]
