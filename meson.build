@@ -75,7 +75,6 @@ if cpp.get_id() == 'gcc' or cpp.get_id() == 'clang'
     '-Werror=int-to-pointer-cast',
     '-Werror=pointer-to-int-cast',
     '-Werror=empty-body',
-    '-Werror=write-strings',
     '-Werror=undef',
   ]
 
