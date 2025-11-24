@@ -609,7 +609,7 @@ xapian_database_get_metadata (XapianDatabase  *db,
 
   try
     {
-      std::string str = xapian_database_get_internal (db)->get_metadata (std::string (key));
+      std::string str = xapian_database_get_internal (db)->get_metadata (key);
 
       return g_strdup (str.c_str ());
     }
@@ -809,8 +809,7 @@ xapian_database_compact_to_path (XapianDatabase             *self,
 
   try
     {
-      const std::string output (path);
-      real_db->compact (output, real_flags);
+      real_db->compact (path, real_flags);
 
       return TRUE;
     }
@@ -907,6 +906,8 @@ xapian_database_enumerate_all_terms (XapianDatabase *self,
 {
   XapianDatabasePrivate *priv = XAPIAN_DATABASE_GET_PRIVATE (self);
 
-  std::string string_prefix (prefix ? prefix : "");
-  return xapian_term_iterator_new (priv->mDB->allterms_begin (string_prefix));
+  if (prefix != NULL)
+    return xapian_term_iterator_new (priv->mDB->allterms_begin (prefix));
+  else
+    return xapian_term_iterator_new (priv->mDB->allterms_begin (std::string_view ()));
 }

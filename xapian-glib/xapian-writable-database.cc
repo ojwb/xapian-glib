@@ -1,4 +1,5 @@
 /* Copyright 2014  Endless Mobile
+ * Copyright 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -92,8 +93,6 @@ xapian_writable_database_init_internal (GInitable    *initable,
 
   try
     {
-      std::string file (path);
-
       /* Xapian >= 1.3 changed the values of these enumeration; in order to work
        * with Xapian 1.2 and Xapian 1.4 we need to do a manual translation
        * of every value into the equivalent Xapian constant
@@ -109,7 +108,7 @@ xapian_writable_database_init_internal (GInitable    *initable,
       if (priv->action == XAPIAN_DATABASE_ACTION_OPEN)
         db_flags |= Xapian::DB_OPEN;
 
-      db = new Xapian::WritableDatabase (file, db_flags | xapian_database_get_flags (database));
+      db = new Xapian::WritableDatabase (path, db_flags | xapian_database_get_flags (database));
 
       xapian_database_set_internal (database, db);
       xapian_database_set_is_writable (database, TRUE);

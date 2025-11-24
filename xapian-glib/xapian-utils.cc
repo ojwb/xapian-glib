@@ -1,5 +1,5 @@
 /* Copyright 2014  Endless Mobile
- * Copyright 2017  Olly Betts
+ * Copyright 2017, 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -191,5 +191,5 @@ xapian_sortable_unserialise (const guchar *value,
   g_return_val_if_fail (value != NULL, 0.0);
 
   const char *p = reinterpret_cast<const char*> (value);
-  return Xapian::sortable_unserialise (std::string (p, len));
+  return Xapian::sortable_unserialise (std::string_view (p, len));
 }

@@ -201,7 +201,7 @@ xapian_document_add_value (XapianDocument *document,
 {
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
 
-  xapian_document_get_internal (document)->add_value (slot, std::string (value));
+  xapian_document_get_internal (document)->add_value (slot, value);
 }
 
 /**
@@ -271,7 +271,7 @@ xapian_document_set_data (XapianDocument *document,
 {
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
 
-  xapian_document_get_internal (document)->set_data (std::string (data));
+  xapian_document_get_internal (document)->set_data (data);
 }
 
 /**
@@ -345,7 +345,7 @@ xapian_document_add_posting (XapianDocument *document,
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
   g_return_if_fail (tname != NULL);
 
-  xapian_document_get_internal (document)->add_posting (std::string (tname),
+  xapian_document_get_internal (document)->add_posting (tname,
                                                         term_pos,
                                                         wdf_increment);
 }
@@ -366,7 +366,7 @@ xapian_document_add_term_full (XapianDocument *document,
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
   g_return_if_fail (tname != NULL);
 
-  xapian_document_get_internal (document)->add_term (std::string (tname), wdf_increment);
+  xapian_document_get_internal (document)->add_term (tname, wdf_increment);
 }
 
 /**
@@ -384,7 +384,7 @@ xapian_document_add_term (XapianDocument *document,
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
   g_return_if_fail (tname != NULL);
 
-  xapian_document_get_internal (document)->add_term (std::string (tname));
+  xapian_document_get_internal (document)->add_term (tname);
 }
 
 /**
@@ -404,7 +404,7 @@ xapian_document_add_boolean_term (XapianDocument *document,
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
   g_return_if_fail (tname != NULL);
 
-  xapian_document_get_internal (document)->add_boolean_term (std::string (tname));
+  xapian_document_get_internal (document)->add_boolean_term (tname);
 }
 
 /**
@@ -430,7 +430,7 @@ xapian_document_remove_posting (XapianDocument *document,
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
   g_return_if_fail (tname != NULL);
 
-  xapian_document_get_internal (document)->remove_posting (std::string (tname),
+  xapian_document_get_internal (document)->remove_posting (tname,
                                                            term_pos,
                                                            wdf_decrement);
 }
@@ -449,7 +449,7 @@ xapian_document_remove_term (XapianDocument *document,
   g_return_if_fail (XAPIAN_IS_DOCUMENT (document));
   g_return_if_fail (tname != NULL);
 
-  xapian_document_get_internal (document)->remove_term (std::string (tname));
+  xapian_document_get_internal (document)->remove_term (tname);
 }
 
 /**

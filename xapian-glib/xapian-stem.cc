@@ -1,4 +1,5 @@
 /* Copyright 2014  Endless Mobile
+ * Copyright 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -80,9 +81,7 @@ xapian_stem_init_internal (GInitable    *initable,
 
   try
     {
-      std::string language (priv->language);
-
-      priv->mStem = new Xapian::Stem (language);
+      priv->mStem = new Xapian::Stem (priv->language);
     }
   catch (const Xapian::Error &err)
     {

@@ -1,5 +1,5 @@
 /* Copyright 2014, 2018  Endless Mobile
- * Copyright 2017  Olly Betts
+ * Copyright 2017, 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -202,7 +202,7 @@ xapian_query_new_for_term (const char *term)
 {
   g_return_val_if_fail (term != NULL, NULL);
 
-  Xapian::Query q = Xapian::Query (std::string (term));
+  Xapian::Query q = Xapian::Query (term);
 
   return xapian_query_new_from_query (q);
 }
@@ -265,7 +265,7 @@ xapian_query_new_for_value (XapianQueryOp  op,
   else
     g_assert_not_reached ();
 
-  Xapian::Query query = Xapian::Query (query_op, slot, std::string (value));
+  Xapian::Query query = Xapian::Query (query_op, slot, value);
 
   return xapian_query_new_from_query (query);
 }
@@ -289,7 +289,7 @@ xapian_query_new_for_terms_pair (XapianQueryOp  op,
   g_return_val_if_fail (a != NULL && b != NULL, NULL);
 
   Xapian::Query::op query_op = xapian_query_op_internal (op);
-  Xapian::Query query = Xapian::Query (query_op, std::string (a), std::string (b));
+  Xapian::Query query = Xapian::Query (query_op, std::string_view (a), std::string_view (b));
 
   return xapian_query_new_from_query (query);
 }
@@ -308,7 +308,7 @@ xapian_query_new_from_string (const char *data)
 {
   g_return_val_if_fail (data != NULL, NULL);
 
-  Xapian::Query query = Xapian::Query (std::string (data));
+  Xapian::Query query = Xapian::Query (data);
 
   return xapian_query_new_from_query (query);
 }

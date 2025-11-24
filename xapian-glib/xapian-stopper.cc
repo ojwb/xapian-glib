@@ -1,4 +1,5 @@
 /* Copyright 2014  Endless Mobile
+ * Copyright 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -148,7 +149,7 @@ xapian_stopper_is_stop_term (XapianStopper *self,
 {
   Xapian::Stopper *stopper = xapian_stopper_get_internal (self);
 
-  return (*stopper) (std::string (term));
+  return (*stopper) (term);
 }
 
 static void

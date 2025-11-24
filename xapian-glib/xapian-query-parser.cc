@@ -1,5 +1,5 @@
 /* Copyright 2014  Endless Mobile
- * Copyright 2017  Olly Betts
+ * Copyright 2017, 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -465,7 +465,7 @@ xapian_query_parser_add_prefix (XapianQueryParser *parser,
   try
     {
       XapianQueryParserPrivate *priv = XAPIAN_QUERY_PARSER_GET_PRIVATE (parser);
-      priv->mQueryParser->add_prefix (std::string (field), std::string (prefix));
+      priv->mQueryParser->add_prefix (field, prefix);
     }
   catch (const Xapian::InvalidOperationError &err)
     {
@@ -498,9 +498,7 @@ xapian_query_parser_add_boolean_prefix (XapianQueryParser *parser,
     {
       XapianQueryParserPrivate *priv = XAPIAN_QUERY_PARSER_GET_PRIVATE (parser);
 
-      priv->mQueryParser->add_boolean_prefix (std::string (field),
-                                              std::string (prefix),
-                                              exclusive);
+      priv->mQueryParser->add_boolean_prefix (field, prefix, exclusive);
     }
   catch (const Xapian::InvalidOperationError &err)
     {
@@ -586,9 +584,9 @@ xapian_query_parser_parse_query_full (XapianQueryParser        *parser,
       if (flags & XAPIAN_QUERY_PARSER_FEATURE_CJK_NGRAM)
         real_flags |= Xapian::QueryParser::FLAG_CJK_NGRAM;
 
-      Xapian::Query query = priv->mQueryParser->parse_query (std::string (query_string),
+      Xapian::Query query = priv->mQueryParser->parse_query (query_string,
                                                              real_flags,
-                                                             std::string (default_prefix));
+                                                             default_prefix);
 
       return xapian_query_new_from_query (query);
     }
