@@ -133,7 +133,7 @@ double
 xapian_document_get_numeric_value (XapianDocument *document,
                                    unsigned int    slot)
 {
-  g_return_val_if_fail (XAPIAN_IS_DOCUMENT (document), Xapian::sortable_unserialise (NULL));
+  g_return_val_if_fail (XAPIAN_IS_DOCUMENT (document), 0.0);
 
   std::string value = xapian_document_get_internal (document)->get_value (slot);
 
