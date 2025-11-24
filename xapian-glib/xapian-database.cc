@@ -730,7 +730,7 @@ xapian_database_get_term_freq (XapianDatabase *db,
                                const char     *term)
 {
   g_return_val_if_fail (XAPIAN_IS_DATABASE (db), 0);
-  g_return_val_if_fail (term == NULL, 0);
+  g_return_val_if_fail (term != NULL, 0);
 
   return xapian_database_get_internal (db)->get_termfreq (term);
 }
@@ -752,7 +752,7 @@ xapian_database_get_collection_freq (XapianDatabase  *db,
                                      const char      *term)
 {
   g_return_val_if_fail (XAPIAN_IS_DATABASE (db), 0);
-  g_return_val_if_fail (term == NULL, 0);
+  g_return_val_if_fail (term != NULL, 0);
 
   return xapian_database_get_internal (db)->get_collection_freq (term);
 }
