@@ -1,5 +1,5 @@
 /* Copyright 2014  Endless Mobile
- * Copyright 2017  Olly Betts
+ * Copyright 2017, 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -26,34 +26,34 @@
 GType \
 type_name ## _get_type (void) \
 { \
-  static volatile gsize g_define_id__volatile = 0; \
-  if (g_once_init_enter (&g_define_id__volatile)) \
+  static gsize g_define_id = 0; \
+  if (g_once_init_enter (&g_define_id)) \
     { \
       static const GEnumValue v[] = { \
         values \
         { 0, NULL, NULL }, \
       }; \
-      GType g_define_id = g_enum_register_static (g_intern_static_string (#TypeName), v); \
-      g_once_init_leave (&g_define_id__volatile, g_define_id); \
+      g_once_init_leave (&g_define_id, \
+                         g_enum_register_static (g_intern_static_string (#TypeName), v)); \
     } \
-  return g_define_id__volatile; \
+  return g_define_id; \
 }
 
 #define XAPIAN_GLIB_DEFINE_FLAGS_TYPE(TypeName,type_name,values) \
 GType \
 type_name ## _get_type (void) \
 { \
-  static volatile gsize g_define_id__volatile = 0; \
-  if (g_once_init_enter (&g_define_id__volatile)) \
+  static gsize g_define_id = 0; \
+  if (g_once_init_enter (&g_define_id)) \
     { \
       static const GFlagsValue v[] = { \
         values \
 	{ 0, NULL, NULL }, \
       }; \
-      GType g_define_id = g_flags_register_static (g_intern_static_string (#TypeName), v); \
-      g_once_init_leave (&g_define_id__volatile, g_define_id); \
+      g_once_init_leave (&g_define_id, \
+                         g_flags_register_static (g_intern_static_string (#TypeName), v)); \
     } \
-  return g_define_id__volatile; \
+  return g_define_id; \
 }
 
 XAPIAN_GLIB_DEFINE_ENUM_TYPE (XapianDatabaseAction, xapian_database_action,
