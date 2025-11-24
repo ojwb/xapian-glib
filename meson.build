@@ -6,7 +6,7 @@ project('xapian-glib', 'c', 'cpp',
           'warning_level=1',
           'buildtype=debugoptimized',
           'c_std=c99',
-          'cpp_std=c++11',
+          'cpp_std=c++17',
         ])
 
 cpp = meson.get_compiler('cpp')
