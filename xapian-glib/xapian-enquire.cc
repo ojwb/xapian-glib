@@ -409,11 +409,11 @@ xapian_enquire_set_query (XapianEnquire *enquire,
     }
 #endif
 
-  if (priv->query == query)
-    return;
-
-  g_clear_object (&priv->query);
-  priv->query = static_cast<XapianQuery *> (g_object_ref (query));
+  if (priv->query != query)
+    {
+      g_clear_object (&priv->query);
+      priv->query = static_cast<XapianQuery *> (g_object_ref (query));
+    }
 
   priv->mEnquire->set_query (*xapian_query_get_internal (query), qlen);
 }
