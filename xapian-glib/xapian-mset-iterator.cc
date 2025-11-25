@@ -127,14 +127,14 @@ class IteratorData {
           mCurrent += xapian_mset_get_internal (mMSet)->size ();
           mCurrentInitialized = true;
         }
-      else
-        {
-          g_clear_object (&mDocument);
 
-          --mCurrent;
-        }
+      g_clear_object (&mDocument);
 
-      return mCurrent != xapian_mset_get_internal (mMSet)->begin ();
+      if (Xapian::iterator_rewound (mCurrent))
+        return FALSE;
+
+      mCurrent--;
+      return TRUE;
     }
 
     unsigned int getRank () {
