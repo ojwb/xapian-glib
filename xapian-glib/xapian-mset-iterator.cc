@@ -504,7 +504,7 @@ xapian_mset_iterator_get_doc_id (XapianMSetIterator *iter,
  *
  * Retrieves the #XapianMSet that created the @iter.
  *
- * Returns: (transfer none): a #XapianMSetIterator
+ * Returns: (transfer none): a #XapianMSet
  */
 XapianMSet *
 xapian_mset_iterator_get_mset (XapianMSetIterator *iter)
