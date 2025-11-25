@@ -1,4 +1,5 @@
 /* Copyright 2014  Endless Mobile
+ * Copyright 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -417,9 +418,10 @@ xapian_document_add_boolean_term (XapianDocument *document,
  *
  * Removes a posting of a term inside @document.
  *
- * Note that the term will still index the document, even if all the
- * occurrences have been removed. To completely remove @tname from
- * the @document, use xapian_document_remove_term() instead.
+ * If the final position is removed and the wdf becomes zero then the term will
+ * be removed from the document. If you just want to completely remove @tname
+ * from the @document, it is simpler to use xapian_document_remove_term()
+ * instead.
  */
 void
 xapian_document_remove_posting (XapianDocument *document,
