@@ -87,7 +87,7 @@ class IteratorData {
       if (!mCurrentInitialized)
         return false;
 
-      return mCurrent == xapian_mset_get_internal (mMSet)->begin ();
+      return Xapian::iterator_rewound (mCurrent);
     }
 
     bool isEnd () {
