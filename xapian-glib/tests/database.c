@@ -268,6 +268,42 @@ database_writable_freqs (void)
   delete_database ("glass-db");
 }
 
+static void
+database_writable_closed (void)
+{
+  GError *error = NULL;
+  XapianWritableDatabase *wdb =
+    xapian_writable_database_new_full ("glass-db",
+                                       XAPIAN_DATABASE_ACTION_CREATE,
+                                       XAPIAN_DATABASE_BACKEND_GLASS,
+                                       0,
+                                       &error);
+
+  g_assert_nonnull (wdb);
+
+  g_object_add_weak_pointer (G_OBJECT (wdb), (gpointer *) &wdb);
+
+  xapian_database_close (XAPIAN_DATABASE (wdb));
+
+  XapianDocument *doc = xapian_document_new ();
+
+  g_object_add_weak_pointer (G_OBJECT (doc), (gpointer *) &doc);
+
+  xapian_document_add_term (doc, "term");
+
+  g_assert_false (xapian_writable_database_add_document (wdb, doc, NULL, &error));
+
+  g_assert_error (error, XAPIAN_ERROR, XAPIAN_ERROR_DATABASE_CLOSED);
+
+  g_object_unref (doc);
+  g_assert_null (doc);
+
+  g_object_unref (wdb);
+  g_assert_null (wdb);
+
+  delete_database ("glass-db");
+}
+
 int
 main (int   argc,
       char *argv[])
@@ -281,6 +317,7 @@ main (int   argc,
   g_test_add_func ("/database/writable/flags/no-termlist", database_writable_flags_no_termlist);
   g_test_add_func ("/database/writable/all_terms", database_writable_all_terms);
   g_test_add_func ("/database/writable/freqs", database_writable_freqs);
+  g_test_add_func ("/database/writable/closed", database_writable_closed);
 
   return g_test_run ();
 }

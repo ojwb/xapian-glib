@@ -64,6 +64,7 @@ GType xapian_database_action_get_type (void);
  * @XAPIAN_ERROR_INVALID_OPERATION: Invalid operation
  * @XAPIAN_ERROR_UNIMPLEMENTED: Operation not implemented
  * @XAPIAN_ERROR_DATABASE: Database error
+ * @XAPIAN_ERROR_DATABASE_CLOSED: close() was called on the Database
  * @XAPIAN_ERROR_DATABASE_CORRUPT: Database is corrupt
  * @XAPIAN_ERROR_DATABASE_CREATE: Failed to create a database
  * @XAPIAN_ERROR_DATABASE_LOCK: Failed to acquire the lock on a database
@@ -79,6 +80,7 @@ GType xapian_database_action_get_type (void);
  * @XAPIAN_ERROR_QUERY_PARSER: Error when parsing a query string
  * @XAPIAN_ERROR_SERIALISATION: Error when serialising or deserialising data
  * @XAPIAN_ERROR_RANGE: Out of bounds access
+ * @XAPIAN_ERROR_WILDCARD: Error expanding a wildcarded query
  *
  * Error codes for the %XAPIAN_ERROR error domain.
  *
@@ -104,7 +106,9 @@ typedef enum {
   XAPIAN_ERROR_QUERY_PARSER,
   XAPIAN_ERROR_SERIALISATION,
   XAPIAN_ERROR_RANGE,
+  XAPIAN_ERROR_WILDCARD,
   XAPIAN_ERROR_DATABASE_NOT_FOUND,
+  XAPIAN_ERROR_DATABASE_CLOSED,
 
   /*< private >*/
   XAPIAN_ERROR_LAST
@@ -112,7 +116,9 @@ typedef enum {
 
 /* Allow #ifdef checks for more recently added enum values. */
 #ifndef __GTK_DOC_IGNORE__
+#define XAPIAN_ERROR_WILDCARD XAPIAN_ERROR_WILDCARD
 #define XAPIAN_ERROR_DATABASE_NOT_FOUND XAPIAN_ERROR_DATABASE_NOT_FOUND
+#define XAPIAN_ERROR_DATABASE_CLOSED XAPIAN_ERROR_DATABASE_CLOSED
 #endif
 
 XAPIAN_GLIB_AVAILABLE_IN_2_0

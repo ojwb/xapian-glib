@@ -1,4 +1,5 @@
 /* Copyright 2014  Endless Mobile
+ * Copyright 2025  Olly Betts
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -50,7 +51,9 @@ init_error_types (void)
   XAPIAN_SET_ERROR_TYPE (QUERY_PARSER, QueryParserError);
   XAPIAN_SET_ERROR_TYPE (SERIALISATION, SerialisationError);
   XAPIAN_SET_ERROR_TYPE (RANGE, RangeError);
+  XAPIAN_SET_ERROR_TYPE (WILDCARD, WildcardError);
   XAPIAN_SET_ERROR_TYPE (DATABASE_NOT_FOUND, DatabaseNotFoundError);
+  XAPIAN_SET_ERROR_TYPE (DATABASE_CLOSED, DatabaseClosedError);
 
 #undef XAPIAN_SET_ERROR_TYPE
 
