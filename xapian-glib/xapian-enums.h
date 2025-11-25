@@ -214,8 +214,31 @@ GType xapian_query_op_get_type (void);
  *   synonyms for single terms
  * @XAPIAN_QUERY_PARSER_FEATURE_AUTO_MULTIWORD_SYNONYMS: enable automatic
  *   use of synonyms for single terms and groups of terms
- * @XAPIAN_QUERY_PARSER_FEATURE_CJK_NGRAM: enable generation of n-grams from
- *   CJK text
+ * @XAPIAN_QUERY_PARSER_FEATURE_NGRAMS: generate n-gram terms for text in
+ *   scripts written without explicit word breaks
+ * @XAPIAN_QUERY_PARSER_FEATURE_CJK_NGRAM: older name for
+ *  XAPIAN_QUERY_PARSER_FEATURE_NGRAMS
+ * @XAPIAN_QUERY_PARSER_FEATURE_WORD_BREAKS: try to determine word breaks
+ *   for text in scripts written without explicit word breaks (requires
+ *   Xapian to be built to use ICU)
+ * @XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_MULTI: support extended wildcard
+ *   `*` which matches zero or more characters, and may be used anwhere in
+ *   a word
+ * @XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_SINGLE: support extended wildcard
+ *   `?` which matches exactly one character, and may be used anwhere in
+ *   a word
+ * @XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_GLOB: Enables both
+ *   XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_MULTI and
+ *   XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_SINGLE
+ * @XAPIAN_QUERY_PARSER_FEATURE_FUZZY: Support fuzzy matching.  E.g.
+ *   `unserten~3` would expand to `uncertain` (and likely other terms).
+ *   `foo~` uses edit distance of 2.  `since~0.2` uses edit distance of
+ *   length("since") * 0.2 = 5 * 0.2 = 1
+ * @XAPIAN_QUERY_PARSER_FEATURE_ACCUMULATE: Accumulate unstem and stoplist
+ *   results.  By default this data is reset for each query parsed.
+ * @XAPIAN_QUERY_PARSER_FEATURE_NO_POSITIONS: Produce a query which doesn't
+ *   use positional information.  Phrase searches, `NEAR` and `ADJ` will
+ *   result in `XAPIAN_QUERY_OP_AND`.
  * @XAPIAN_QUERY_PARSER_FEATURE_DEFAULT: default flags
  *
  * Flags for xapian_query_parser_parse_query_full().
@@ -234,11 +257,32 @@ typedef enum {
   XAPIAN_QUERY_PARSER_FEATURE_SYNONYM = 1 << 8,
   XAPIAN_QUERY_PARSER_FEATURE_AUTO_SYNONYMS = 1 << 9,
   XAPIAN_QUERY_PARSER_FEATURE_AUTO_MULTIWORD_SYNONYMS = 1 << 10 | XAPIAN_QUERY_PARSER_FEATURE_AUTO_SYNONYMS,
-  XAPIAN_QUERY_PARSER_FEATURE_CJK_NGRAM = 1 << 11,
+  XAPIAN_QUERY_PARSER_FEATURE_NGRAMS = 1 << 11,
+  XAPIAN_QUERY_PARSER_FEATURE_WORD_BREAKS = 1 << 12,
+  XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_MULTI = 1 << 13,
+  XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_SINGLE = 1 << 14,
+  XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_GLOB = XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_MULTI |
+                                              XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_SINGLE,
+  XAPIAN_QUERY_PARSER_FEATURE_FUZZY = 1 << 15,
+  XAPIAN_QUERY_PARSER_FEATURE_ACCUMULATE = 1 << 16,
+  XAPIAN_QUERY_PARSER_FEATURE_NO_POSITIONS = 1 << 17,
+  XAPIAN_QUERY_PARSER_FEATURE_CJK_NGRAM = XAPIAN_QUERY_PARSER_FEATURE_NGRAMS,
   XAPIAN_QUERY_PARSER_FEATURE_DEFAULT = XAPIAN_QUERY_PARSER_FEATURE_BOOLEAN |
                                         XAPIAN_QUERY_PARSER_FEATURE_PHRASE |
                                         XAPIAN_QUERY_PARSER_FEATURE_LOVEHATE
 } XapianQueryParserFeature;
+
+/* Allow #ifdef checks for more recently added enum values. */
+#ifndef __GTK_DOC_IGNORE__
+#define XAPIAN_QUERY_PARSER_FEATURE_NGRAMS XAPIAN_QUERY_PARSER_FEATURE_NGRAMS
+#define XAPIAN_QUERY_PARSER_FEATURE_WORD_BREAKS XAPIAN_QUERY_PARSER_FEATURE_WORD_BREAKS
+#define XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_MULTI XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_MULTI
+#define XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_SINGLE XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_SINGLE
+#define XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_GLOB XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_GLOB
+#define XAPIAN_QUERY_PARSER_FEATURE_FUZZY XAPIAN_QUERY_PARSER_FEATURE_FUZZY
+#define XAPIAN_QUERY_PARSER_FEATURE_ACCUMULATE XAPIAN_QUERY_PARSER_FEATURE_ACCUMULATE
+#define XAPIAN_QUERY_PARSER_FEATURE_NO_POSITIONS XAPIAN_QUERY_PARSER_FEATURE_NO_POSITIONS
+#endif
 
 XAPIAN_GLIB_AVAILABLE_IN_2_0
 GType xapian_query_parser_feature_get_type (void);

@@ -581,8 +581,20 @@ xapian_query_parser_parse_query_full (XapianQueryParser        *parser,
         real_flags |= Xapian::QueryParser::FLAG_AUTO_SYNONYMS;
       if (flags & XAPIAN_QUERY_PARSER_FEATURE_AUTO_MULTIWORD_SYNONYMS)
         real_flags |= Xapian::QueryParser::FLAG_AUTO_MULTIWORD_SYNONYMS;
-      if (flags & XAPIAN_QUERY_PARSER_FEATURE_CJK_NGRAM)
-        real_flags |= Xapian::QueryParser::FLAG_CJK_NGRAM;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_NGRAMS)
+        real_flags |= Xapian::QueryParser::FLAG_NGRAMS;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_WORD_BREAKS)
+        real_flags |= Xapian::QueryParser::FLAG_WORD_BREAKS;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_MULTI)
+        real_flags |= Xapian::QueryParser::FLAG_WILDCARD_MULTI;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_WILDCARD_SINGLE)
+        real_flags |= Xapian::QueryParser::FLAG_WILDCARD_SINGLE;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_FUZZY)
+        real_flags |= Xapian::QueryParser::FLAG_FUZZY;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_ACCUMULATE)
+        real_flags |= Xapian::QueryParser::FLAG_ACCUMULATE;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_NO_POSITIONS)
+        real_flags |= Xapian::QueryParser::FLAG_NO_POSITIONS;
 
       Xapian::Query query = priv->mQueryParser->parse_query (query_string,
                                                              real_flags,
