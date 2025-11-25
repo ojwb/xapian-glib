@@ -386,7 +386,7 @@ xapian_enquire_set_sort_by_value (XapianEnquire *enquire,
  * xapian_enquire_set_query:
  * @enquire: a #XapianEnquire
  * @query: a #XapianQuery
- * @qlen: the length of the @query
+ * @qlen: the length of the @query (or 0 to use @query's natural length).
  *
  * Sets the #XapianQuery for the #XapianEnquire instance.
  */
