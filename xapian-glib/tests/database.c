@@ -66,7 +66,7 @@ database_writable_new (void)
   GError *error = NULL;
   XapianWritableDatabase *db =
     xapian_writable_database_new ("doesexist",
-                                  XAPIAN_DATABASE_ACTION_CREATE,
+                                  XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
                                   &error);
 
   g_assert_nonnull (db);
@@ -90,7 +90,7 @@ database_writable_backend_glass (void)
   GError *error = NULL;
   XapianWritableDatabase *db =
     xapian_writable_database_new_with_backend ("glass-db",
-                                               XAPIAN_DATABASE_ACTION_CREATE,
+                                               XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
                                                XAPIAN_DATABASE_BACKEND_GLASS,
                                                &error);
 
@@ -116,7 +116,7 @@ database_writable_flags_no_termlist (void)
   GError *error = NULL;
   XapianWritableDatabase *db =
     xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE,
+                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        XAPIAN_DATABASE_FLAGS_NO_TERMLIST,
                                        &error);
@@ -144,7 +144,7 @@ database_writable_all_terms (void)
   char *term;
   XapianWritableDatabase *wdb =
     xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE,
+                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        0,
                                        &error);
@@ -224,7 +224,7 @@ database_writable_freqs (void)
   GError *error = NULL;
   XapianWritableDatabase *wdb =
     xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE,
+                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        0,
                                        &error);
@@ -274,7 +274,7 @@ database_writable_closed (void)
   GError *error = NULL;
   XapianWritableDatabase *wdb =
     xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE,
+                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        0,
                                        &error);
