@@ -60,87 +60,70 @@ xapian_query_get_internal (XapianQuery *self)
 Xapian::Query::op
 xapian_query_op_internal (XapianQueryOp op)
 {
-  Xapian::Query::op query_op = Xapian::Query::OP_AND;
-
+  // The numeric values of XAPIAN_QUERY_OP_* should match those of
+  // Xapian::Query::OP_* so the compiler should be able to optimise this to a
+  // simple integer range check.
   switch (op)
     {
     case XAPIAN_QUERY_OP_AND:
-      query_op = Xapian::Query::OP_AND;
-      break;
+      return Xapian::Query::OP_AND;
 
     case XAPIAN_QUERY_OP_OR:
-      query_op = Xapian::Query::OP_OR;
-      break;
+      return Xapian::Query::OP_OR;
 
     case XAPIAN_QUERY_OP_AND_NOT:
-      query_op = Xapian::Query::OP_AND_NOT;
-      break;
+      return Xapian::Query::OP_AND_NOT;
 
     case XAPIAN_QUERY_OP_XOR:
-      query_op = Xapian::Query::OP_XOR;
-      break;
+      return Xapian::Query::OP_XOR;
 
     case XAPIAN_QUERY_OP_AND_MAYBE:
-      query_op = Xapian::Query::OP_AND_MAYBE;
-      break;
+      return Xapian::Query::OP_AND_MAYBE;
 
     case XAPIAN_QUERY_OP_FILTER:
-      query_op = Xapian::Query::OP_FILTER;
-      break;
+      return Xapian::Query::OP_FILTER;
 
     case XAPIAN_QUERY_OP_NEAR:
-      query_op = Xapian::Query::OP_NEAR;
-      break;
+      return Xapian::Query::OP_NEAR;
 
     case XAPIAN_QUERY_OP_PHRASE:
-      query_op = Xapian::Query::OP_PHRASE;
-      break;
+      return Xapian::Query::OP_PHRASE;
 
     case XAPIAN_QUERY_OP_VALUE_RANGE:
-      query_op = Xapian::Query::OP_VALUE_RANGE;
-      break;
+      return Xapian::Query::OP_VALUE_RANGE;
 
     case XAPIAN_QUERY_OP_SCALE_WEIGHT:
-      query_op = Xapian::Query::OP_SCALE_WEIGHT;
-      break;
+      return Xapian::Query::OP_SCALE_WEIGHT;
 
     case XAPIAN_QUERY_OP_ELITE_SET:
-      query_op = Xapian::Query::OP_ELITE_SET;
-      break;
+      return Xapian::Query::OP_ELITE_SET;
 
     case XAPIAN_QUERY_OP_VALUE_GE:
-      query_op = Xapian::Query::OP_VALUE_GE;
-      break;
+      return Xapian::Query::OP_VALUE_GE;
 
     case XAPIAN_QUERY_OP_VALUE_LE:
-      query_op = Xapian::Query::OP_VALUE_LE;
-      break;
+      return Xapian::Query::OP_VALUE_LE;
 
     case XAPIAN_QUERY_OP_SYNONYM:
-      query_op = Xapian::Query::OP_SYNONYM;
-      break;
+      return Xapian::Query::OP_SYNONYM;
 
     case XAPIAN_QUERY_OP_MAX:
-      query_op = Xapian::Query::OP_MAX;
-      break;
+      return Xapian::Query::OP_MAX;
 
     case XAPIAN_QUERY_OP_WILDCARD:
-      query_op = Xapian::Query::OP_WILDCARD;
-      break;
+      return Xapian::Query::OP_WILDCARD;
 
     case XAPIAN_QUERY_OP_EDIT_DISTANCE:
-      query_op = Xapian::Query::OP_EDIT_DISTANCE;
-      break;
+      return Xapian::Query::OP_EDIT_DISTANCE;
 
     case XAPIAN_QUERY_OP_INVALID:
-      query_op = Xapian::Query::OP_INVALID;
-      break;
+      return Xapian::Query::OP_INVALID;
 
     default:
       g_assert_not_reached ();
     }
 
-  return query_op;
+  return Xapian::Query::OP_INVALID;
 }
 
 static void
