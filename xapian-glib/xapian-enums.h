@@ -157,6 +157,9 @@ GQuark xapian_error_quark (void);
  * @XAPIAN_QUERY_OP_SYNONYM: treats a set of sub-queries as synonyms
  * @XAPIAN_QUERY_OP_MAX: pick the maximum weight of any subquery
  * @XAPIAN_QUERY_OP_WILDCARD: wildcard expansion
+ * @XAPIAN_QUERY_OP_EDIT_DISTANCE: edit distance expansion
+ * @XAPIAN_QUERY_OP_INVALID: construct an invalid query (this can be useful as
+ *   a placeholder)
  *
  * Operators for #XapianQuery.
  *
@@ -179,6 +182,8 @@ typedef enum {
   XAPIAN_QUERY_OP_SYNONYM,
   XAPIAN_QUERY_OP_MAX,
   XAPIAN_QUERY_OP_WILDCARD,
+  XAPIAN_QUERY_OP_EDIT_DISTANCE,
+  XAPIAN_QUERY_OP_INVALID,
 
   /*< private >*/
   XAPIAN_QUERY_OP_LAST
@@ -188,6 +193,8 @@ typedef enum {
 #ifndef __GTK_DOC_IGNORE__
 #define XAPIAN_QUERY_OP_MAX XAPIAN_QUERY_OP_MAX
 #define XAPIAN_QUERY_OP_WILDCARD XAPIAN_QUERY_OP_WILDCARD
+#define XAPIAN_QUERY_OP_EDIT_DISTANCE XAPIAN_QUERY_OP_EDIT_DISTANCE
+#define XAPIAN_QUERY_OP_INVALID XAPIAN_QUERY_OP_INVALID
 #endif
 
 XAPIAN_GLIB_AVAILABLE_IN_2_0

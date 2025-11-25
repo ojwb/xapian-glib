@@ -128,6 +128,14 @@ xapian_query_op_internal (XapianQueryOp op)
       query_op = Xapian::Query::OP_WILDCARD;
       break;
 
+    case XAPIAN_QUERY_OP_EDIT_DISTANCE:
+      query_op = Xapian::Query::OP_EDIT_DISTANCE;
+      break;
+
+    case XAPIAN_QUERY_OP_INVALID:
+      query_op = Xapian::Query::OP_INVALID;
+      break;
+
     default:
       g_assert_not_reached ();
     }
