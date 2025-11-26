@@ -29,10 +29,12 @@ G_BEGIN_DECLS
  * XapianDatabaseAction:
  * @XAPIAN_DATABASE_ACTION_CREATE_OR_OPEN: Create a database or open if it
  *   already exists
- * @XAPIAN_DATABASE_ACTION_CREATE: Create a database
+ * @XAPIAN_DATABASE_ACTION_CREATE: Create a database, failing if it already
+ *   exists
  * @XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE: Create a database and overwrite
  *   it if one already exists
- * @XAPIAN_DATABASE_ACTION_OPEN: Open a database
+ * @XAPIAN_DATABASE_ACTION_OPEN: Open a database, failing if it doesn't already
+ *   exist
  *
  * Actions for #XapianWritableDatabase.
  *
