@@ -338,6 +338,10 @@ xapian_query_parser_set_stemming_strategy (XapianQueryParser  *parser,
       stem_strategy = Xapian::QueryParser::STEM_ALL_Z;
       break;
 
+    case XAPIAN_STEM_STRATEGY_STEM_SOME_FULL_POS:
+      stem_strategy = Xapian::QueryParser::STEM_SOME_FULL_POS;
+      break;
+
     default:
       g_assert_not_reached ();
     }

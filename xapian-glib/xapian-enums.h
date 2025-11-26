@@ -304,6 +304,8 @@ GType xapian_query_parser_feature_get_type (void);
  * @XAPIAN_STEM_STRATEGY_STEM_SOME: generate both stemmed and unstemmed terms
  * @XAPIAN_STEM_STRATEGY_STEM_ALL: generate only stemmed terms, without the Z prefix
  * @XAPIAN_STEM_STRATEGY_STEM_ALL_Z: generate only stemmed terms, with the Z prefix
+ * @XAPIAN_STEM_STRATEGY_STEM_SOME_FULL_POS: like
+ *   XAPIAN_STEM_STRATEGY_STEM_SOME but also stores positions for stemmed terms
  *
  * Stemming strategies.
  *
@@ -313,8 +315,14 @@ typedef enum {
   XAPIAN_STEM_STRATEGY_STEM_NONE,
   XAPIAN_STEM_STRATEGY_STEM_SOME,
   XAPIAN_STEM_STRATEGY_STEM_ALL,
-  XAPIAN_STEM_STRATEGY_STEM_ALL_Z
+  XAPIAN_STEM_STRATEGY_STEM_ALL_Z,
+  XAPIAN_STEM_STRATEGY_STEM_SOME_FULL_POS
 } XapianStemStrategy;
+
+/* Allow #ifdef checks for more recently added enum values. */
+#ifndef __GTK_DOC_IGNORE__
+#define XAPIAN_STEM_STRATEGY_STEM_SOME_FULL_POS XAPIAN_STEM_STRATEGY_STEM_SOME_FULL_POS
+#endif
 
 XAPIAN_GLIB_AVAILABLE_IN_2_0
 GType xapian_stem_strategy_get_type (void);
