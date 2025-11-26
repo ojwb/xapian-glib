@@ -333,6 +333,11 @@ GType xapian_stem_strategy_get_type (void);
  * XapianTermGeneratorFeature:
  * @XAPIAN_TERM_GENERATOR_FEATURE_NONE: No features
  * @XAPIAN_TERM_GENERATOR_FEATURE_SPELLING: Index data required for spelling correction
+ * @XAPIAN_TERM_GENERATOR_FEATURE_NGRAMS: generate n-gram terms for text in
+ *   scripts written without explicit word breaks
+ * @XAPIAN_TERM_GENERATOR_FEATURE_WORD_BREAKS: try to determine word breaks
+ *   for text in scripts written without explicit word breaks (requires
+ *   Xapian to be built to use ICU)
  *
  * TermGenerator flags
  *
@@ -340,7 +345,9 @@ GType xapian_stem_strategy_get_type (void);
  */
 typedef enum {
   XAPIAN_TERM_GENERATOR_FEATURE_NONE,
-  XAPIAN_TERM_GENERATOR_FEATURE_SPELLING = 1
+  XAPIAN_TERM_GENERATOR_FEATURE_SPELLING = 1,
+  XAPIAN_TERM_GENERATOR_FEATURE_NGRAMS = 2,
+  XAPIAN_TERM_GENERATOR_FEATURE_WORD_BREAKS = 3
 } XapianTermGeneratorFeature;
 
 XAPIAN_GLIB_AVAILABLE_IN_2_0

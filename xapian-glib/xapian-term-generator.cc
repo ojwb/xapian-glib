@@ -447,6 +447,10 @@ xapian_term_generator_set_flags (XapianTermGenerator        *generator,
 
   if ((flags & XAPIAN_TERM_GENERATOR_FEATURE_SPELLING) != 0)
     real_flags |= Xapian::TermGenerator::FLAG_SPELLING;
+  if ((flags & XAPIAN_TERM_GENERATOR_FEATURE_NGRAMS) != 0)
+    real_flags |= Xapian::TermGenerator::FLAG_NGRAMS;
+  if ((flags & XAPIAN_TERM_GENERATOR_FEATURE_WORD_BREAKS) != 0)
+    real_flags |= Xapian::TermGenerator::FLAG_WORD_BREAKS;
 
   priv->mGenerator->set_flags(static_cast<Xapian::TermGenerator::flags>(real_flags));
 }
