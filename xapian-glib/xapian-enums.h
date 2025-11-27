@@ -62,13 +62,10 @@ GType xapian_database_action_get_type (void);
 /**
  * XapianError:
  * @XAPIAN_ERROR_ASSERTION: Assertion failure
- * @XAPIAN_ERROR_INVALID_ARGUMENT: Invalid argument
- * @XAPIAN_ERROR_INVALID_OPERATION: Invalid operation
- * @XAPIAN_ERROR_UNIMPLEMENTED: Operation not implemented
- * @XAPIAN_ERROR_DATABASE: Database error
  * @XAPIAN_ERROR_DATABASE_CLOSED: close() was called on the Database
  * @XAPIAN_ERROR_DATABASE_CORRUPT: Database is corrupt
  * @XAPIAN_ERROR_DATABASE_CREATE: Failed to create a database
+ * @XAPIAN_ERROR_DATABASE: Database error
  * @XAPIAN_ERROR_DATABASE_LOCK: Failed to acquire the lock on a database
  * @XAPIAN_ERROR_DATABASE_MODIFIED: Database modified after opening
  * @XAPIAN_ERROR_DATABASE_NOT_FOUND: Database not found during opening
@@ -77,11 +74,14 @@ GType xapian_database_action_get_type (void);
  * @XAPIAN_ERROR_DOC_NOT_FOUND: Document not found
  * @XAPIAN_ERROR_FEATURE_UNAVAILABLE: Feature not available with the current backend
  * @XAPIAN_ERROR_INTERNAL: Internal state error
+ * @XAPIAN_ERROR_INVALID_ARGUMENT: Invalid argument
+ * @XAPIAN_ERROR_INVALID_OPERATION: Invalid operation
  * @XAPIAN_ERROR_NETWORK: Network error
  * @XAPIAN_ERROR_NETWORK_TIMEOUT: Network timeout error
  * @XAPIAN_ERROR_QUERY_PARSER: Error when parsing a query string
- * @XAPIAN_ERROR_SERIALISATION: Error when serialising or deserialising data
  * @XAPIAN_ERROR_RANGE: Out of bounds access
+ * @XAPIAN_ERROR_SERIALISATION: Error when serialising or deserialising data
+ * @XAPIAN_ERROR_UNIMPLEMENTED: Operation not implemented
  * @XAPIAN_ERROR_WILDCARD: Error expanding a wildcarded query
  *
  * Error codes for the %XAPIAN_ERROR error domain.
