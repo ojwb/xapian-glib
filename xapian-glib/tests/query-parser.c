@@ -74,7 +74,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  g_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, G_TEST_OPTION_ISOLATE_DIRS, NULL);
 
   g_test_add_func ("/query-parser/default", query_parser_default);
   g_test_add_func ("/query-parser/set-default-op", query_parser_set_default_op);

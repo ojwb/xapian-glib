@@ -123,7 +123,7 @@ elif buildtype == 'release'
 endif
 
 # Dependencies
-glib_req_version = '>= 2.40.0'
+glib_req_version = '>= 2.60.0'
 xapian_req_version = '>= 2.0.0'
 
 gobject_dep = dependency('gobject-2.0', version: glib_req_version)
