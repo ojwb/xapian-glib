@@ -599,6 +599,8 @@ xapian_query_parser_parse_query_full (XapianQueryParser        *parser,
         real_flags |= Xapian::QueryParser::FLAG_ACCUMULATE;
       if (flags & XAPIAN_QUERY_PARSER_FEATURE_NO_POSITIONS)
         real_flags |= Xapian::QueryParser::FLAG_NO_POSITIONS;
+      if (flags & XAPIAN_QUERY_PARSER_FEATURE_NO_PROPER_NOUN_HEURISTIC)
+        real_flags |= Xapian::QueryParser::FLAG_NO_PROPER_NOUN_HEURISTIC;
 
       Xapian::Query query = priv->mQueryParser->parse_query (query_string,
                                                              real_flags,
