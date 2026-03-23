@@ -12,7 +12,7 @@ the GObject Introspection API.
 
 Xapian-GLib, unsurprisingly, requires:
 
- * Xapian ≥ 1.5.0 (tested with commit 6e12ad7cd2c4b89fb5e982700553bd54ec0d1261)
+ * Xapian ≥ 2.0.0
  * GObject ≥ 2.40
 
 You will also need [Meson](https://mesonbuild.com) in order to build

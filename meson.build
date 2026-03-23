@@ -124,17 +124,12 @@ endif
 
 # Dependencies
 glib_req_version = '>= 2.40.0'
-xapian_req_version = '>= 1.5.0'
+xapian_req_version = '>= 2.0.0'
 
 gobject_dep = dependency('gobject-2.0', version: glib_req_version)
 gio_dep = dependency('gio-2.0')
 xapian_dep = dependency('xapian-core', version: xapian_req_version, required: false)
 xapian_pc_dep = 'xapian-core'
-if not xapian_dep.found()
-  # Xapian 1.5 has a versioned xapian-core pkg-config file
-  xapian_dep = dependency('xapian-core-1.5', version: xapian_req_version)
-  xapian_pc_dep = 'xapian-core-1.5'
-endif
 
 # Modules
 gnome = import('gnome')
