@@ -85,7 +85,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  g_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, G_TEST_OPTION_ISOLATE_DIRS, NULL);
 
   g_test_add_func ("/document/new-empty", document_new_empty);
   g_test_add_func ("/document/add-value", document_add_value);

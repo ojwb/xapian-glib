@@ -1,30 +1,23 @@
 #include <glib.h>
-#include <glib/gstdio.h>
 #include "xapian-glib.h"
 
-/* Remove a directory and all files directly inside it. */
+typedef struct {
+  char *db_path;
+} DatabaseFixture;
+
 static void
-delete_database (const char *dir)
+database_fixture_setup (DatabaseFixture *fixture,
+                        gconstpointer    user_data)
 {
-  GDir *d = g_dir_open (dir, 0, NULL);
-  const char *name;
+  g_mkdir_with_parents (g_get_home_dir (), 0700);
+  fixture->db_path = g_build_filename (g_get_home_dir (), "test-db", NULL);
+}
 
-  while ((name = g_dir_read_name (d)) != NULL)
-    {
-      char *path;
-
-      if ((name[0] == '.' && name[1] == '\0') ||
-          (name[0] == '.' && name[1] == '.' && name[2] == '\0'))
-        continue;
-
-      path = g_build_filename (dir, name, NULL);
-      g_unlink (path);
-      g_free (path);
-    }
-
-  g_dir_close (d);
-
-  g_rmdir (dir);
+static void
+database_fixture_teardown (DatabaseFixture *fixture,
+                           gconstpointer    user_data)
+{
+  g_free (fixture->db_path);
 }
 
 static void
@@ -61,12 +54,13 @@ database_new_nonexistent (void)
 }
 
 static void
-database_writable_new (void)
+database_writable_new (DatabaseFixture *fixture,
+                       gconstpointer    user_data)
 {
   GError *error = NULL;
   XapianWritableDatabase *db =
-    xapian_writable_database_new ("doesexist",
-                                  XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
+    xapian_writable_database_new (fixture->db_path,
+                                  XAPIAN_DATABASE_ACTION_CREATE,
                                   &error);
 
   g_assert_nonnull (db);
@@ -79,18 +73,17 @@ database_writable_new (void)
   g_object_unref (db);
   g_assert_null (db);
 
-  g_assert_true (g_file_test ("doesexist", G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR));
-
-  delete_database ("doesexist");
+  g_assert_true (g_file_test (fixture->db_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR));
 }
 
 static void
-database_writable_backend_glass (void)
+database_writable_backend_glass (DatabaseFixture *fixture,
+                                 gconstpointer    user_data)
 {
   GError *error = NULL;
   XapianWritableDatabase *db =
-    xapian_writable_database_new_with_backend ("glass-db",
-                                               XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
+    xapian_writable_database_new_with_backend (fixture->db_path,
+                                               XAPIAN_DATABASE_ACTION_CREATE,
                                                XAPIAN_DATABASE_BACKEND_GLASS,
                                                &error);
 
@@ -104,19 +97,22 @@ database_writable_backend_glass (void)
   g_object_unref (db);
   g_assert_null (db);
 
-  g_assert_true (g_file_test ("glass-db", G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR));
-  g_assert_true (g_file_test ("glass-db/termlist.glass", G_FILE_TEST_EXISTS));
+  char *termlist_path = g_build_filename (fixture->db_path, "termlist.glass", NULL);
 
-  delete_database ("glass-db");
+  g_assert_true (g_file_test (fixture->db_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR));
+  g_assert_true (g_file_test (termlist_path, G_FILE_TEST_EXISTS));
+
+  g_free (termlist_path);
 }
 
 static void
-database_writable_flags_no_termlist (void)
+database_writable_flags_no_termlist (DatabaseFixture *fixture,
+                                     gconstpointer    user_data)
 {
   GError *error = NULL;
   XapianWritableDatabase *db =
-    xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
+    xapian_writable_database_new_full (fixture->db_path,
+                                       XAPIAN_DATABASE_ACTION_CREATE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        XAPIAN_DATABASE_FLAGS_NO_TERMLIST,
                                        &error);
@@ -131,20 +127,23 @@ database_writable_flags_no_termlist (void)
   g_object_unref (db);
   g_assert_null (db);
 
-  g_assert_true (g_file_test ("glass-db", G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR));
-  g_assert_false (g_file_test ("glass-db/termlist.glass", G_FILE_TEST_EXISTS));
+  char *termlist_path = g_build_filename (fixture->db_path, "termlist.glass", NULL);
 
-  delete_database ("glass-db");
+  g_assert_true (g_file_test (fixture->db_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR));
+  g_assert_false (g_file_test (termlist_path, G_FILE_TEST_EXISTS));
+
+  g_free (termlist_path);
 }
 
 static void
-database_writable_all_terms (void)
+database_writable_all_terms (DatabaseFixture *fixture,
+                             gconstpointer    user_data)
 {
   GError *error = NULL;
   char *term;
   XapianWritableDatabase *wdb =
-    xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
+    xapian_writable_database_new_full (fixture->db_path,
+                                       XAPIAN_DATABASE_ACTION_CREATE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        0,
                                        &error);
@@ -168,7 +167,7 @@ database_writable_all_terms (void)
   g_assert_null (doc);
 
   XapianDatabase *db =
-    xapian_database_new_with_path ("glass-db", &error);
+    xapian_database_new_with_path (fixture->db_path, &error);
 
   g_object_add_weak_pointer (G_OBJECT (db), (gpointer *) &db);
 
@@ -214,17 +213,16 @@ database_writable_all_terms (void)
 
   g_object_unref (db);
   g_assert_null (db);
-
-  delete_database ("glass-db");
 }
 
 static void
-database_writable_freqs (void)
+database_writable_freqs (DatabaseFixture *fixture,
+                         gconstpointer    user_data)
 {
   GError *error = NULL;
   XapianWritableDatabase *wdb =
-    xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
+    xapian_writable_database_new_full (fixture->db_path,
+                                       XAPIAN_DATABASE_ACTION_CREATE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        0,
                                        &error);
@@ -252,7 +250,7 @@ database_writable_freqs (void)
   g_assert_null (doc);
 
   XapianDatabase *db =
-    xapian_database_new_with_path ("glass-db", &error);
+    xapian_database_new_with_path (fixture->db_path, &error);
 
   g_object_add_weak_pointer (G_OBJECT (db), (gpointer *) &db);
 
@@ -264,17 +262,16 @@ database_writable_freqs (void)
 
   g_object_unref (db);
   g_assert_null (db);
-
-  delete_database ("glass-db");
 }
 
 static void
-database_writable_closed (void)
+database_writable_closed (DatabaseFixture *fixture,
+                          gconstpointer    user_data)
 {
   GError *error = NULL;
   XapianWritableDatabase *wdb =
-    xapian_writable_database_new_full ("glass-db",
-                                       XAPIAN_DATABASE_ACTION_CREATE_OR_OVERWRITE,
+    xapian_writable_database_new_full (fixture->db_path,
+                                       XAPIAN_DATABASE_ACTION_CREATE,
                                        XAPIAN_DATABASE_BACKEND_GLASS,
                                        0,
                                        &error);
@@ -300,24 +297,52 @@ database_writable_closed (void)
 
   g_object_unref (wdb);
   g_assert_null (wdb);
-
-  delete_database ("glass-db");
 }
 
 int
 main (int   argc,
       char *argv[])
 {
-  g_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, G_TEST_OPTION_ISOLATE_DIRS, NULL);
 
   g_test_add_func ("/database/new/empty", database_new_empty);
   g_test_add_func ("/database/new/non-existent", database_new_nonexistent);
-  g_test_add_func ("/database/writable/new", database_writable_new);
-  g_test_add_func ("/database/writable/backend/glass", database_writable_backend_glass);
-  g_test_add_func ("/database/writable/flags/no-termlist", database_writable_flags_no_termlist);
-  g_test_add_func ("/database/writable/all_terms", database_writable_all_terms);
-  g_test_add_func ("/database/writable/freqs", database_writable_freqs);
-  g_test_add_func ("/database/writable/closed", database_writable_closed);
+
+  g_test_add ("/database/writable/new",
+              DatabaseFixture, NULL,
+              database_fixture_setup,
+              database_writable_new,
+              database_fixture_teardown);
+
+  g_test_add ("/database/writable/backend/glass",
+              DatabaseFixture, NULL,
+              database_fixture_setup,
+              database_writable_backend_glass,
+              database_fixture_teardown);
+
+  g_test_add ("/database/writable/flags/no-termlist",
+              DatabaseFixture, NULL,
+              database_fixture_setup,
+              database_writable_flags_no_termlist,
+              database_fixture_teardown);
+
+  g_test_add ("/database/writable/all_terms",
+              DatabaseFixture, NULL,
+              database_fixture_setup,
+              database_writable_all_terms,
+              database_fixture_teardown);
+
+  g_test_add ("/database/writable/freqs",
+              DatabaseFixture, NULL,
+              database_fixture_setup,
+              database_writable_freqs,
+              database_fixture_teardown);
+
+  g_test_add ("/database/writable/closed",
+              DatabaseFixture, NULL,
+              database_fixture_setup,
+              database_writable_closed,
+              database_fixture_teardown);
 
   return g_test_run ();
 }
